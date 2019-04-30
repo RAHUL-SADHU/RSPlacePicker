@@ -28,7 +28,7 @@ dependencies {
 ### Add code your activity
 ```
  val placePicker = RSPlacePicker()
-                   .setAndroidApiKey("AIzaSyDP7GmYr0Om-EuTqFUkqhMRQmxlbCG6-3I")
+                   .setAndroidApiKey("YOUR GOOGLE API KEY")
 		   .build(this)
  startActivityForResult(placePicker, REQUEST_PLACE_PICKER)
  
