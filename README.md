@@ -20,3 +20,6 @@ dependencies {
 
 ```
 
+## Setup
+1. Add Google Play Services to your project -[How To](https://developers.google.com/android/guides/setup).
+
