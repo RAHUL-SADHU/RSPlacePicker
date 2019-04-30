@@ -1,7 +1,7 @@
 # RSPlacePicker
 Pick a location and get latitude, longitude and map imageUrl
 
-# Download 
+# Download
 Add Jitpack in your root build.gradle at the end of repositories:
 ```
 allprojects {
@@ -31,15 +31,15 @@ dependencies {
                    .setAndroidApiKey("YOUR GOOGLE API KEY")
 		   .build(this)
  startActivityForResult(placePicker, REQUEST_PLACE_PICKER)
- 
+
  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if ((requestCode == REQUEST_PLACE_PICKER) && (resultCode == Activity.RESULT_OK)) {
             val location: LocationModel? = data?.let { RSPlacePicker.getLocation(it) }
-            Toast.makeText(this, "latitude: ${location?.latitude} longitude: ${location?.longitude} 
+            Toast.makeText(this, "latitude: ${location?.latitude} longitude: ${location?.longitude}
 	    imageUrl:${location?.mapImage}", Toast.LENGTH_LONG).show()
         }
   }
- 
+
 ```
 
