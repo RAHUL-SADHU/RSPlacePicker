@@ -21,5 +21,25 @@ dependencies {
 ```
 
 ## Setup
-1. Add Google Play Services to your project -[How To](https://developers.google.com/android/guides/setup).
+1. Add Google Play Services to your project - [How to](https://developers.google.com/android/guides/setup).
+2. Sign up for API keys - [How to](https://developers.google.com/places/android-sdk/signup)
+3. Add the Android API key to your AndroidManifest file as in the [sample project](https://github.com/RAHUL-SADHU/RSPlacePicker/blob/master/app/src/main/AndroidManifest.xml).
+
+### Add code your activity
+```
+ val placePicker = RSPlacePicker()
+                   .setAndroidApiKey("AIzaSyDP7GmYr0Om-EuTqFUkqhMRQmxlbCG6-3I")
+		   .build(this)
+ startActivityForResult(placePicker, REQUEST_PLACE_PICKER)
+ 
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if ((requestCode == REQUEST_PLACE_PICKER) && (resultCode == Activity.RESULT_OK)) {
+            val location: LocationModel? = data?.let { RSPlacePicker.getLocation(it) }
+            Toast.makeText(this, "latitude: ${location?.latitude} longitude: ${location?.longitude} 
+	    imageUrl:${location?.mapImage}", Toast.LENGTH_LONG).show()
+        }
+    }
+ 
+```
 
