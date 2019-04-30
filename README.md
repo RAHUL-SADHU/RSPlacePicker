@@ -1,7 +1,7 @@
 # RSPlacePicker
 Pick a location and get latitude, longitude and map imageUrl
 
-<img src="Images/img_1.png" alt="Map expanded" width="210" /> <img src="Images/img_2.png" alt="Place selected" width="210"/> <img src="Images/img_3.png" alt="Results expanded" width="210"/>
+<img src="Images/img_1.png" alt="Map expanded" width="500" /> <img src="Images/img_2.png" alt="Place selected" width="500"/> <img src="Images/img_3.png" alt="Results expanded" width="500"/>
 
 # Download
 Add Jitpack in your root build.gradle at the end of repositories:
