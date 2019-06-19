@@ -17,7 +17,7 @@ allprojects {
 Step 2. Add the dependency
 ```
 dependencies {
-   implementation 'com.github.RAHUL-SADHU:RSPlacePicker:1.0.0_alpha01'
+   implementation 'com.github.RAHUL-SADHU:RSPlacePicker:1.0.0_alpha02'
  }
 
 ```
@@ -25,6 +25,7 @@ dependencies {
 ## Setup
 1. Add Google Play Services to your project - [How to](https://developers.google.com/android/guides/setup).
 2. Sign up for API keys - [How to](https://developers.google.com/places/android-sdk/signup)
+   - Make sure your api key is not restricted.
 3. Add the Android API key to your AndroidManifest file as in the [sample project](https://github.com/RAHUL-SADHU/RSPlacePicker/blob/master/app/src/main/AndroidManifest.xml).
 
 ### Add code your activity
