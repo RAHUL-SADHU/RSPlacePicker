@@ -17,7 +17,7 @@ allprojects {
 Step 2. Add the dependency
 ```
 dependencies {
-   implementation 'com.github.RAHUL-SADHU:RSPlacePicker:1.0.0_alpha02'
+   implementation 'com.github.RAHUL-SADHU:RSPlacePicker:1.0.0_alpha03'
  }
 
 ```
