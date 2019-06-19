@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if ((requestCode == REQUEST_PLACE_PICKER) && (resultCode == Activity.RESULT_OK)) {
             val location: LocationModel? = data?.let { RSPlacePicker.getLocation(it) }
-            Toast.makeText(this, "latitude: ${location?.latitude} longitude: ${location?.longitude} imageUrl: ${location?.mapImage}"
+            Toast.makeText(this, "address: ${location?.address} \nlatitude: ${location?.latitude} " +
+                    "\nlongitude: ${location?.longitude} \nimageUrl: ${location?.mapImage}"
                     , Toast.LENGTH_LONG).show()
         }
     }

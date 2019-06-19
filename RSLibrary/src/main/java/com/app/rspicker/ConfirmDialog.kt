@@ -1,6 +1,5 @@
 package com.app.rspicker
 
-import android.app.Dialog
 import android.graphics.Bitmap
 import android.location.Address
 import android.location.Geocoder
@@ -12,7 +11,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.app.rspicker.databinding.DialogConfirmBinding
 import com.app.rspicker.utils.*
-import com.bumptech.glide.Glide
 import java.io.IOException
 
 class ConfirmDialog : DialogFragment() {
@@ -44,16 +42,16 @@ class ConfirmDialog : DialogFragment() {
 
     }
 
-    fun setconfirmListener(locationConfirmListener: LocationConfirmListener) {
+    fun setConfirmListener(locationConfirmListener: LocationConfirmListener) {
         this.locationConfirmListener = locationConfirmListener
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = DataBindingUtil.inflate(
-                layoutInflater,
-                R.layout.dialog_confirm,
-                container,
-                false
+            layoutInflater,
+            R.layout.dialog_confirm,
+            container,
+            false
         )
 
         val address = getAddress()
@@ -61,11 +59,11 @@ class ConfirmDialog : DialogFragment() {
         mBinding.txtAddress.text = "${address?.getAddressLine(0)}"
 
         val staticMapUrl = STATIC_MAP_URL
-                .format(
-                        latitude,
-                        longitude,
-                        RSPlacePicker.androidApiKey
-                )
+            .format(
+                latitude,
+                longitude,
+                RSPlacePicker.androidApiKey
+            )
 
         mBinding.imgMap.setImageBitmap(bitmap)
 
@@ -75,7 +73,8 @@ class ConfirmDialog : DialogFragment() {
         }
 
         mBinding.btnOk.setOnClickListener {
-            locationConfirmListener.locationConfirm(latitude, longitude, staticMapUrl)
+            address?.getAddressLine(0)
+                ?.let { value -> locationConfirmListener.locationConfirm(value, latitude, longitude, staticMapUrl) }
             dismiss()
         }
 
@@ -88,10 +87,10 @@ class ConfirmDialog : DialogFragment() {
 
         try {
             addresses = Geocoder(requireContext()).getFromLocation(
-                    latitude,
-                    longitude,
-                    // In this sample, we get just a single address.
-                    1
+                latitude,
+                longitude,
+                // In this sample, we get just a single address.
+                1
             )
             if (!addresses.isNullOrEmpty()) {
                 val address = addresses[0]

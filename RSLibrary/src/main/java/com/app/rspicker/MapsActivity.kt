@@ -6,29 +6,25 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
 import com.app.rspicker.databinding.ActivityMapsBinding
 import com.app.rspicker.utils.*
-
-
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.location.LocationServices
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
-import kotlinx.android.synthetic.main.activity_maps.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.IOException
@@ -36,8 +32,8 @@ import java.util.*
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCameraMoveListener,
-        GoogleMap.OnCameraMoveStartedListener, GoogleMap.OnCameraIdleListener,LocationConfirmListener,EasyPermissions.PermissionCallbacks {
-
+    GoogleMap.OnCameraMoveStartedListener, GoogleMap.OnCameraIdleListener, LocationConfirmListener,
+    EasyPermissions.PermissionCallbacks {
 
 
     private lateinit var mMap: GoogleMap
@@ -55,7 +51,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_maps)
 
         val mapFragment = supportFragmentManager
-                .findFragmentById(R.id.map) as SupportMapFragment
+            .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         Places.initialize(applicationContext, RSPlacePicker.androidApiKey)
         mBinding.txtSearch.setOnClickListener {
@@ -66,13 +62,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
             mMap.snapshot {
                 isSelectAutoComplete = false
                 val confirmDialog = ConfirmDialog.newInstance(latitude, longitude, it)
-                confirmDialog.setconfirmListener(this)
+                confirmDialog.setConfirmListener(this)
                 Utils.showDialog(supportFragmentManager, confirmDialog)
             }
 
         }
     }
-
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
@@ -80,18 +75,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
         mMap.setOnCameraIdleListener(this)
         mMap.setOnCameraMoveStartedListener(this)
         if (ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
         ) {
             enableCurrentLocation()
 
         } else {
             EasyPermissions.requestPermissions(
-                    this,
-                    getString(R.string.permission_location),
-                    RC_LOCATION_PERMISSION,
-                    Manifest.permission.ACCESS_FINE_LOCATION
+                this,
+                getString(R.string.permission_location),
+                RC_LOCATION_PERMISSION,
+                Manifest.permission.ACCESS_FINE_LOCATION
             )
         }
 
@@ -103,7 +98,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
         longitude = cameraPosition.target.longitude
         Utils.logInfo(javaClass.simpleName, "$latitude $longitude")
     }
-
 
     override fun onCameraMoveStarted(p0: Int) {
         Utils.logInfo("onCameraMoveStarted", "onCameraMoveStarted")
@@ -130,32 +124,30 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
 
     }
 
-
     private fun moveCamera(latitude: Double?, longitude: Double?) {
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latitude?.let {
             longitude?.let { it1 ->
                 LatLng(
-                        it,
-                        it1
+                    it,
+                    it1
                 )
             }
         }, DEFAULT_ZOOM))
     }
 
-
     private fun getLastLocation() {
         if (ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
         ) {
             mFusedLocationProviderClient.lastLocation
-                    .addOnSuccessListener {
-                        if (it != null) {
-                            Log.e("###", " LastKnowLocation ${it.latitude}   ${it.longitude}")
-                            moveCamera(it.latitude, it.longitude)
-                        }
+                .addOnSuccessListener {
+                    if (it != null) {
+                        Log.e("###", " LastKnowLocation ${it.latitude}   ${it.longitude}")
+                        moveCamera(it.latitude, it.longitude)
                     }
+                }
         }
     }
 
@@ -186,12 +178,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
         }
     }
 
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
-
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
@@ -206,9 +196,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
 
     private fun enableCurrentLocation() {
         if (ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
         ) {
             mMap.isMyLocationEnabled = true
             getLastLocation()
@@ -218,16 +208,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
     private fun openAutoCompletePlace() {
         val fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
         val intent = Autocomplete.IntentBuilder(
-                AutocompleteActivityMode.OVERLAY, fields
+            AutocompleteActivityMode.OVERLAY, fields
         )
-                .build(this);
+            .build(this);
         startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
     }
 
-    override fun locationConfirm(latitude: Double, longitude: Double, imageUrl: String) {
+    override fun locationConfirm(address: String, latitude: Double, longitude: Double, imageUrl: String) {
         val data = Intent()
-        val locationModel = LocationModel(latitude,longitude,imageUrl)
-        data.putExtra(KEY_LOCATION,locationModel)
+        val locationModel = LocationModel(address, latitude, longitude, imageUrl)
+        data.putExtra(KEY_LOCATION, locationModel)
         setResult(Activity.RESULT_OK, data)
         finish()
     }
@@ -237,10 +227,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
 
         try {
             addresses = Geocoder(this).getFromLocation(
-                    latitude,
-                    longitude,
-                    // In this sample, we get just a single address.
-                    1
+                latitude,
+                longitude,
+                // In this sample, we get just a single address.
+                1
             )
             if (!addresses.isNullOrEmpty()) {
                 val address = addresses[0]
@@ -255,6 +245,4 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
             Utils.logError(javaClass.simpleName, illegalArgumentException.localizedMessage)
         }
     }
-
-
 }
