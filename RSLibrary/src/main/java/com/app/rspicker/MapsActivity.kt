@@ -65,7 +65,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
                 confirmDialog.setConfirmListener(this)
                 Utils.showDialog(supportFragmentManager, confirmDialog)
             }
-
         }
     }
 
@@ -89,7 +88,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
                 Manifest.permission.ACCESS_FINE_LOCATION
             )
         }
-
     }
 
     override fun onCameraMove() {
@@ -187,7 +185,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             AppSettingsDialog.Builder(this).build().show()
         }
-
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
@@ -210,7 +207,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
         val intent = Autocomplete.IntentBuilder(
             AutocompleteActivityMode.OVERLAY, fields
         )
-            .build(this);
+            .build(this)
         startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
     }
 
